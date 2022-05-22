@@ -1,0 +1,131 @@
+# Шифр Цезаря с циклическим сдвигом, т.е. сдвигом на длину слова
+def change_word(word):
+    word_rotate = len([i for i in word if i.isalpha()])
+    encode_word = ''
+    for c in word:
+        if c.isalpha():
+            new_position = ord(c) + word_rotate
+            if c.isupper() and new_position > 90:
+                new_position = 64 + (word_rotate - (90 - ord(c)))
+                encode_word += chr(new_position)
+            elif c.islower() and new_position > 122:
+                new_position = 96 + (word_rotate - (122 - ord(c)))
+                encode_word += chr(new_position)
+            else:
+                encode_word += chr(new_position)
+        else:
+            encode_word += c
+    return encode_word
+
+# Шифр Цезаря со сдвигом на определенную длину. Английские буквы
+
+
+def change_word_en(word, rotate):
+    word_rotate = rotate
+    encode_word = ''
+    for c in word:
+        if c.isalpha():
+            new_position = ord(c) + word_rotate
+            if c.isupper() and new_position > 90:
+                new_position = 64 + (word_rotate - (90 - ord(c)))
+                encode_word += chr(new_position)
+            elif c.islower() and new_position > 122:
+                new_position = 96 + (word_rotate - (122 - ord(c)))
+                encode_word += chr(new_position)
+            else:
+                encode_word += chr(new_position)
+        else:
+            encode_word += c
+    return encode_word
+
+# Шифр Цезаря со сдвигом на определенную длину. Русские буквы
+
+
+def change_word_ru(word, rotate):
+    word_rotate = rotate
+    encode_word = ''
+    for c in word:
+        if c.isalpha():
+            new_position = ord(c) + word_rotate
+            if c.isupper() and new_position > 1071:
+                new_position = 1039 + (word_rotate - (1071 - ord(c)))
+                encode_word += chr(new_position)
+            elif c.islower() and new_position > 1103:
+                new_position = 1071 + (word_rotate - (1103 - ord(c)))
+                encode_word += chr(new_position)
+            else:
+                encode_word += chr(new_position)
+        else:
+            encode_word += c
+    return encode_word
+
+# Дешифрование Цезаря. Русские буквы
+
+
+def change_word_ru_d(word, rotate):
+    word_rotate = rotate
+    encode_word = ''
+    for c in word:
+        if c.isalpha():
+            new_position = ord(c) - word_rotate
+            if c.isupper() and new_position < 1040:
+                new_position = 1072 - (word_rotate - (ord(c) - 1040))
+                encode_word += chr(new_position)
+            elif c.islower() and new_position < 1072:
+                new_position = 1104 - (word_rotate - (ord(c) - 1072))
+                encode_word += chr(new_position)
+            else:
+                encode_word += chr(new_position)
+        else:
+            encode_word += c
+    return encode_word
+
+# Дешифрование Цезаря. Русские буквы
+
+
+def change_word_en_d(word, rotate):
+    word_rotate = rotate
+    encode_word = ''
+    for c in word:
+        if c.isalpha():
+            new_position = ord(c) - word_rotate
+            if c.isupper() and new_position < 65:
+                new_position = 91 - (word_rotate - (ord(c) - 65))
+                encode_word += chr(new_position)
+            elif c.islower() and new_position < 97:
+                new_position = 123 - (word_rotate - (ord(c) - 97))
+                encode_word += chr(new_position)
+            else:
+                encode_word += chr(new_position)
+        else:
+            encode_word += c
+    return encode_word
+
+
+if input('Вы знаете сдвиг шифра?\n>') in 'YyYesyes':
+    language = input('Введите язык, ru - русский, по дефлту английский:\n>')
+    input_string = list(input('Введите строку:\n>').split())
+    n = int(input('Введите сдвиг\n>'))
+    k = input(
+        'Введите Ш для шифрования, и Д для дешифрования. По умолчанию стоит шифрование.\n>')
+    if language == 'ru':
+        if k in 'Ддd':
+            for i in range(len(input_string)):
+                print(change_word_ru_d(input_string[i], n), end=' ')
+        else:
+            for i in range(len(input_string)):
+                print(change_word_ru(input_string[i], n), end=' ')
+    else:
+        if k in 'Ддd':
+            for i in range(len(input_string)):
+                print(change_word_en_d(input_string[i], n), end=' ')
+        else:
+            for i in range(len(input_string)):
+                print(change_word_en(input_string[i], n), end=' ')
+else:
+    input_string = list(input('Введите строку:\n>').split())
+    for i in range(len(input_string)):
+        for n in range(26):
+            print(change_word_en_d(input_string[i], n), end='---')
+        else:
+            print('\n')
